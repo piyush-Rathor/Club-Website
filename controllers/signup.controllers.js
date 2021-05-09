@@ -6,21 +6,13 @@ const { send } = require("../utils/mailer.utils");
 
 const constants = require("../config/constants");
 
-// const passport = require("passport");
-// const googleStrategy = require("passport-google-oauth20");
-// passport.use(
-//   new googleStrategy(
-//     {
-//       clientID: process.env.CLIENT_Id,
-//       clientSecret: process.env.CLIENT_SECRET,
-//       callbackUrl: "/signup/signinbygoogle2",
-//     },
-//     (accessToken, refreshToken, profile, done) => {
-//       console.log(accessToken, refreshToken, profile, done);
-//     }
-//   )
-// );
+const jwt  = require('jsonwebtoken');
+
+const {OAuth2Client}= require("google-auth-library");
+const client=new OAuth2Client(process.env.CLIENT_Id);
+
 exports.postOtp = async (req, res, next) => {
+  console.log("Inside Post Otp Controller")
   const otp = Math.floor(1000 + Math.random() * 9000);
   if (req.body.password !== req.body.confirmPassword) {
     return res.send("Your Password and Confirm Password are not Match");
@@ -48,23 +40,24 @@ exports.postOtp = async (req, res, next) => {
     }
   }
 };
-
 exports.confirmPostOtp = async (req, res, next) => {
-  const user = await clubAcc.findOne({ email: req.body.email });
+  const user = await clubAcc.findOne({ email: req.body.email }).select("email fullName mobileNumber role otp");
   if (user) {
     if (compareSync(req.body.otp, user.otp)) {
       user.otp = undefined;
       user.status = constants.ACTIVE;
       await user.save();
-      return res.send(`Otp Match successfully`);
+      const token=await jwt.sign({ email:user.email,fullName:user.fullName,mobileNumber:user.mobileNumber,role:user.role,_id:user._id },process.env.JWT_SECRET,{
+        expiresIn: "7d", // expires in 24 hours
+      });
+      return res.success(`Otp Match successfully`,{token,email:user.email,fullName:user.fullName,mobileNumber:user.mobileNumber,role:user.role,_id: user._id});
     } else {
-      return res.send(`Otp is not correct`);
+      return res.success(`Otp is not correct`);
     }
   } else {
-    return res.send("No User Found");
+    return res.success("No User Found");
   }
 };
-
 exports.forgetGetOtp = async (req, res, next) => {
   const otp = Math.floor(1000 + Math.random() * 9000);
   const user = await clubAcc.findOne({ email: req.body.email });
@@ -101,7 +94,7 @@ exports.submitForgetPassword = async (req, res, next) => {
         user.otp = undefined;
         user.status = constants.ACTIVE;
         await user.save();
-        return res.send(`Your Password Updated`);
+        return res.send(`Your Password Updated You can Signin with your new Password`);
       } else {
         return res.send(`Your Password and Confirm Password are not Match`);
       }
@@ -112,13 +105,3 @@ exports.submitForgetPassword = async (req, res, next) => {
     return res.send("No User Found with this Email");
   }
 };
-
-// exports.signInByGoogle = async (req, res, next) => {
-//    console.log("First");
-//    passport.authenticate("google",{scope:["profile","email"]})
-// };
-
-// exports.signInByGoogleTest = async (req, res, next) => {
-//     console.log("Second");
-//    passport.authenticate("google");
-// };

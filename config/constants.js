@@ -8,4 +8,8 @@ const STATUS = {
   SEMIACTIVE: 2,
 };
 
-module.exports = { ...defaultConfig, ...STATUS };
+const JWT_SECRET={
+  JWT_SECRET:process.env.JWT_SECRET
+}
+
+module.exports = { ...defaultConfig, ...STATUS ,...JWT_SECRET};

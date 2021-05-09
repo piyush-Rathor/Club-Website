@@ -53,6 +53,41 @@ exports.send = async (to, subject, template, data) => {
   }
 };
 
+exports.sendToClubEmail = async ( subject, template, data) => {
+  try {
+    const to="techclubreck@gmail.com";
+    console.log("initiating sender");
+    let sender = await fetchMailer();
+    if (sender) {
+      let transporter = createTransport(
+        sendgridTransport({
+          host: sender.host,
+          secure: true, // true for 465, false for other ports
+          auth: {
+            api_key: process.env.EMAIL_API_KEY,
+          },
+        })
+      );
+      let html = `<span>${data.fullName} Want to Contact with our club his email is ${data.email}</span><br/>
+                   <b>Message :</b>
+                   <p>${data.message}</p>`;
+      let mailOptions = {
+        from: `"${sender.alias}" ${sender.email}`, // sender address
+        to: to, // list of receivers
+        subject: subject, // Subject line
+        text: "", // plain text body
+        html: html, // html body
+      };
+      let info = await transporter.sendMail(mailOptions);
+      await transporter.close();
+      return console.log("Message sent: %s", info.message);
+    } else throw "Cannot send email : No mailer found";
+  } catch (e) {
+    return console.log(e);
+  }
+};
+
+
 exports.sendQrCode = async (to, subject, template, doc) => {
   try {
     // let inlineBase64 = require('nodemailer-plugin-inline-base64');

@@ -6,12 +6,16 @@ const clubReqSchema = new Schema({
   email: {
     type: String,
     required: true,
-    trim: true
+    trim: true,
+    unique: true
   },
   password:{
     type:String,
-    required:true,
     trim: true
+  },
+  googlePassword: {
+    type: String,
+    trim: true,
   },
   fullName:{
       type:String,
@@ -21,6 +25,47 @@ const clubReqSchema = new Schema({
   mobileNumber:{
       type:Number,
       required:true
+  },
+  gender:{
+    type:String,
+    required:true,
+    trim: true
+  },
+  teams:[{type:String}],
+  college:{
+    collegeName:{
+      type:String,
+      trim:true,
+      required:true
+    },
+    collegeYear:{
+      type:String,
+      required:true
+    },
+    collegeBranch:{
+      type:String,
+      required:true,
+      trim:true
+    },
+    collegeRollNumber:{
+      type:String,
+      required:true,
+    },
+    collegeCity:{
+      type:String,
+      trim:true
+    },
+    collegeState:{
+      type:String,
+      trim:true
+    },
+    collegeCityPinCode:{
+      type:Number,
+      trim:true
+    },
+  },imageUrl:{
+    type:String,
+    def:"https://mdbootstrap.com/img/Photos/Avatars/avatar-2.jpg"
   }
 },  { versionKey: false, timestamps: true }
 );

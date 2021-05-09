@@ -1,5 +1,7 @@
 const express = require("express");
 
+const passport= require("passport");
+
 const router = express.Router();
 
 const signUpController = require("../controllers/signup.controllers");
@@ -14,9 +16,16 @@ router.post("/submitforgetotp", signUpController.submitForgetGetOtp);
 
 router.post("/submitforgetpassword", signUpController.submitForgetPassword);
 
-// router.get("/signinbygoogle", signUpController.signInByGoogle);
+function isLoggedIn(req, res, next) {
+    req.user?next():res.sendStatus(401);
+}
 
-// router.get("/signinbygoogle2", signUpController.signInByGoogleTest);
-
+router.get("/protected",isLoggedIn, (req, res) => {
+    return res.send(`Your Data`);
+  });
+  
+router.get("/auth/failure", (req, res) => {
+    res.send(`Something Went Wrong!!`);
+});
 
 module.exports = router;
