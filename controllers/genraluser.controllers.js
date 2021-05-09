@@ -3,13 +3,14 @@ const UserAccount = require("../model/accounts.model");
 
 exports.membershipFormSubmit = async (req, res, next) => {
   if (res.locals.role.toString() === "Genral User") {
+    const teams = req.body.teams.split(" ");
+    teams.pop();
     const reqUser = await requestUser.findOne({ email: res.locals.email });
     if (reqUser) {
       return res.error(`Your Request is Allready Exist`, reqUser);
     } else {
       const {
         gender,
-        teams,
         collegeName,
         collegeYear,
         collegeBranch,
@@ -17,6 +18,7 @@ exports.membershipFormSubmit = async (req, res, next) => {
         collegeCity,
         collegeState,
         collegeCityPinCode,
+        message,
       } = req.body;
       const user = new requestUser({
         email: res.locals.user.email,
@@ -25,7 +27,7 @@ exports.membershipFormSubmit = async (req, res, next) => {
         fullName: res.locals.user.fullName,
         mobileNumber: res.locals.user.mobileNumber,
         gender,
-        teams: [...teams.replace("[", "").replace("]", "").split(",")],
+        teams: teams,
         college: {
           collegeName,
           collegeYear,
@@ -35,6 +37,7 @@ exports.membershipFormSubmit = async (req, res, next) => {
           collegeState,
           collegeCityPinCode,
         },
+        message,
       });
       await user.save();
       const genralUser = await UserAccount.findOne({
