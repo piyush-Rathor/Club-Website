@@ -9,7 +9,7 @@ exports.verify= async(req, res, next) =>{
         console.log(' verify token found');
         jwt.verify(token, constants.JWT_SECRET, async function (err, decoded) {
           if (err) {
-            console.log("Inside Error");
+            console.log(`Inside Error`);
             return res.unauthorizedUser();
           }
           else {

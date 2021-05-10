@@ -29,10 +29,10 @@ const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: false }));
 
 
-app.response.unauthorizedUser = function() {
+app.response.unauthorizedUser = function(message, data, displayMessage, code) {
   console.log(chalk.yellow('Unauthorized User'));
   this.status(200).send(
-    Response('error', 'Unauthorized User', undefined, undefined, 403),
+    Response('error', 'Unauthorized User', {displayMessage:`User is Unauthorized`}, undefined, 403),
   );
 };
 
