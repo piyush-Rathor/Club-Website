@@ -36,7 +36,7 @@ exports.send = async (to, subject, template, data) => {
           },
         })
       );
-      let html = `<h3>Your Unnat Club Otp is ${data}</h3>`;
+      let html = template;
       let mailOptions = {
         from: `"${sender.alias}" ${sender.email}`, // sender address
         to: to, // list of receivers

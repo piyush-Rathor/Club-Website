@@ -17,7 +17,7 @@ exports.postOtp = async (req, res, next) => {
   if (req.body.password !== req.body.confirmPassword) {
     return res.send("Your Password and Confirm Password are not Match");
   }
-  send(req.body.email, "Your Unnat Technical Club Otp", "Nothing", otp);
+  send(req.body.email, "Your Unnat Technical Club Otp", `<h3>Your Unnat Club Otp is ${otp}</h3>`, otp);
   const user = await clubAcc.findOne({ email: req.body.email });
   if (!user) {
     clubAccUser = new clubAcc({
@@ -62,7 +62,7 @@ exports.forgetGetOtp = async (req, res, next) => {
   const otp = Math.floor(1000 + Math.random() * 9000);
   const user = await clubAcc.findOne({ email: req.body.email });
   if (user) {
-    send(req.body.email, "Your Unnat Technical Club Otp", "Nothing", otp);
+    send(req.body.email, "Your Unnat Technical Club Otp", `<h3>Your Unnat Club Otp is ${otp}</h3>`, otp);
     user.otp = hashSync(otp);
     await user.save();
     return res.send("Otp Send successfully");
