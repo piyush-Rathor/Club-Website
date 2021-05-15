@@ -4,8 +4,8 @@ const UserAccount = require("../model/accounts.model");
 const {send}= require("../utils/mailer.utils")
 
 const htmlEmailMembershipForm=`<p>Hey</p>
-<p>Your Request Has been sent</p>
-<b>We will Response You Soon</p>`
+<p>Your Request has been sent</p>
+<b>You will let you inform Soon</p>`
 
 exports.membershipFormSubmit = async (req, res, next) => {
   try {
