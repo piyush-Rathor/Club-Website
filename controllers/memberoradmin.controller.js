@@ -8,7 +8,7 @@ exports.postLogin = async (req, res, next) => {
         if(!user){
             user = await clubAdminAccounts.findById({_id:res.locals.user._id}).select("email fullName mobileNumber gender Specialization role branch");
         }
-        return res.success(user);
+        return res.success(`Profile Details`,user);
     }
     catch(err){
 
