@@ -21,7 +21,8 @@ const loginRouter = require("./routes/login.routes");
 const signupRouter = require("./routes/signup.routes");
 const contactRouter = require("./routes/contact.routes");
 const genrelUser = require("./routes/genraluser.routes")
-const memberorgenralUser=require("./routes/membersoradmin.routes")
+const membersoradminUser=require("./routes/membersoradmin.routes");
+const adminUser=require("./routes/admin.routes")
 
 
 app.use(cors());
@@ -69,7 +70,8 @@ app.get(
     failureRedirect: "/signup/auth/failure",
   })
 );
-app.use("/member", memberorgenralUser);
+app.use("/member", membersoradminUser);
+app.use("/admin", adminUser);
 mongoose
   .connect(MONGODB_URI) //mongoose database connect ho jaye
   .then((result) => {
