@@ -14,3 +14,12 @@ exports.getProfile = async (req, res, next) => {
 
     }
 };
+exports.getClubMembers = async (req, res, next) => {
+    try{
+        let user = await clubMembers.findById({_id:res.locals.user._id}).select("email fullName mobileNumber gender specialization role branch year imageUrl");
+        return res.success(`Members`,user);
+    }
+    catch(err){
+
+    }
+};

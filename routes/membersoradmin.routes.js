@@ -8,5 +8,7 @@ const {verifyMemberorAdmin} =require('../services/auth')
 
 router.get('/profile',verifyMemberorAdmin,memberoradminController.getProfile);
 
+router.get('/getmembers',verifyMemberorAdmin,memberoradminController.getClubMembers);
+
 module.exports = router;
 
