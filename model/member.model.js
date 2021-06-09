@@ -73,9 +73,22 @@ const clubMemberSchema = new Schema(
       type: String,
       def: "https://mdbootstrap.com/img/Photos/Avatars/avatar-2.jpg",
     },
-    Specialization:{
-        type:String,
-        trim:true,
+    specialization: {
+      type: String,
+      trim: true,
+    },
+    role: {
+      type: String,
+      trim: true,
+      required: true,
+    },
+    branch:{
+      type: String,
+      trim: true,
+    },
+    year:{
+      type:String,
+      trim:true,
     }
   },
   { versionKey: false, timestamps: true }

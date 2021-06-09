@@ -6,7 +6,7 @@ const memberoradminController = require('../controllers/memberoradmin.controller
 
 const {verifyMemberorAdmin} =require('../services/auth')
 
-router.get('/profile',verifyMemberorAdmin,memberoradminController.postLogin);
+router.get('/profile',verifyMemberorAdmin,memberoradminController.getProfile);
 
 module.exports = router;
 
