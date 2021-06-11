@@ -16,8 +16,8 @@ exports.getProfile = async (req, res, next) => {
 };
 exports.getClubMembers = async (req, res, next) => {
     try{
-        let user = await clubMembers.findById({_id:res.locals.user._id}).select("email fullName mobileNumber gender specialization role branch year imageUrl");
-        return res.success(`Members`,user);
+        let members = await clubMembers.find().select("email fullName mobileNumber gender specialization role branch year imageUrl");
+        return res.success(`Members`,members);
     }
     catch(err){
 
