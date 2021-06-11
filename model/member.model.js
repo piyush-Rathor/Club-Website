@@ -80,7 +80,7 @@ const clubMemberSchema = new Schema(
     role: {
       type: String,
       trim: true,
-      required: true,
+      def:"Member"
     },
     branch:{
       type: String,

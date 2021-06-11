@@ -8,5 +8,6 @@ const {verifyAdmin} =require("../services/auth")
 
 router.get("/clubreq",verifyAdmin,adminController.getClubReq);
 
+router.patch("/acceptreq",verifyAdmin,adminController.acceptReq);
 
 module.exports = router;

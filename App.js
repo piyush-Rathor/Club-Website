@@ -22,7 +22,8 @@ const signupRouter = require("./routes/signup.routes");
 const contactRouter = require("./routes/contact.routes");
 const genrelUser = require("./routes/genraluser.routes")
 const membersoradminUser=require("./routes/membersoradmin.routes");
-const adminUser=require("./routes/admin.routes")
+const adminUser=require("./routes/admin.routes");
+const userRouter=require("./routes/user.routes");
 
 
 app.use(cors());
@@ -54,7 +55,7 @@ app.response.error = function(message, data, displayMessage, code) {
   this.status(200).send(Response('error', message, data, displayMessage, code));
 };
 
-
+app.use("/user", userRouter);
 app.use("/login", loginRouter);
 app.use("/signup", signupRouter);
 app.use("/contact", contactRouter);
