@@ -15,7 +15,7 @@ exports.postLogin = async (req, res, next) => {
     .findOne({ email: loginEmail })
     .select("email password status role fullName mobileNumber");
     const userAdmin = await clubAdminAccounts.findOne({ email: loginEmail}).select("email password status role fullName mobileNumber");
-    const userMember = await clubAdminAccounts.findOne({ email: loginEmail}).select("email password status role fullName mobileNumber");
+    const userMember = await clubMembersAccounts.findOne({ email: loginEmail}).select("email password status role fullName mobileNumber");
     let user=userGenral || userMember || userAdmin;
   if (!user) {
     return res.status(400).json({ message: `No User Exist with this Email` });
