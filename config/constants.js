@@ -14,8 +14,16 @@ const JWT_SECRET={
 
 const selectionMAil=(name)=>{
   return(
-    `<b>Congratulations!</b>${name}
-    You are Selected for Club`
+    `<b style="display:block text-align:center">Congratulations!</b> 
+    <div style="text-align:center">${name}</div>
+    <div style="text-align:center">You are Selected for Club<div>`
+  )
+}
+const rejectctionMAil=(name)=>{
+  return(
+    `<div>Hey ${name}
+    You are <b>not</b> Selected for Club
+    <div>Better luck next Time!</div>`
   )
 }
 
