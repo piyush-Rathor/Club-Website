@@ -53,9 +53,9 @@ exports.send = async (to, subject, template, data) => {
   }
 };
 
-exports.sendToClubEmail = async ( subject, template, data) => {
+exports.sendToClubEmail = async (subject, template, data) => {
   try {
-    const to="techclubreck@gmail.com";
+    const to = "techclubreck@gmail.com";
     console.log("initiating sender");
     let sender = await fetchMailer();
     if (sender) {
@@ -86,7 +86,6 @@ exports.sendToClubEmail = async ( subject, template, data) => {
     return console.log(e);
   }
 };
-
 
 exports.sendQrCode = async (to, subject, template, doc) => {
   try {
