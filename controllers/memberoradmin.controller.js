@@ -16,7 +16,7 @@ exports.getProfile = async (req, res, next) => {
 };
 exports.getClubMembers = async (req, res, next) => {
     try{
-        let members = await clubMembers.find().select("email fullName mobileNumber gender specialization role branch year imageUrl");
+        let members = await clubMembers.find().select("email fullName mobileNumber gender specialization role branch year imageUrl teams");
         return res.success(`Members`,members);
     }
     catch(err){
