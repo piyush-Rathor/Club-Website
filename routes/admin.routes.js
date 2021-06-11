@@ -10,4 +10,6 @@ router.get("/clubreq",verifyAdmin,adminController.getClubReq);
 
 router.patch("/acceptreq",verifyAdmin,adminController.acceptReq);
 
+router.post("/rejectedreq",verifyAdmin,adminController.rejectReq);
+
 module.exports = router;
