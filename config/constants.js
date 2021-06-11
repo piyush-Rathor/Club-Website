@@ -12,4 +12,11 @@ const JWT_SECRET={
   JWT_SECRET:process.env.JWT_SECRET
 }
 
-module.exports = { ...defaultConfig, ...STATUS ,...JWT_SECRET};
+const selectionMAil=(name)=>{
+  return(
+    `<b>Congratulations!</b>${name}
+    You are Selected for Club`
+  )
+}
+
+module.exports = { ...defaultConfig, ...STATUS ,...JWT_SECRET,selectionMAil};
