@@ -34,8 +34,8 @@ exports.acceptReq = async (req, res, next) => {
         });
         send(deleteUser.email,"Unnat Technical Club Request",constants.selectionMAil(deleteUser.fullName));
         await member.save();
-        const user = await clubGenralUser.findOneAndDelete({ email:deleteUser.email});
-        return res.success('Request Accepted',member);
+        const user = await (await clubGenralUser.findOneAndDelete({ email:deleteUser.email}));
+        return res.success('Request Accepted');
     }
     catch(err){
     }
@@ -44,8 +44,8 @@ exports.acceptReq = async (req, res, next) => {
 
 exports.rejectReq = async (req, res, next) => {
     try{
-        const deleteRequest=await clubRequest.findOneAndDelete({_id:req.query.id});
-        send(deleteUser.email,"Unnat Technical Club Request",constants.rejectctionMAil(deleteUser.fullName));
+        const deleteRequest=await clubRequest.findOneAndDelete({_id:req.query.id}).select("email fullName mobileNumber teams");
+        send(deleteRequest.email,"Unnat Technical Club Request",constants.rejectctionMAil(deleteRequest.fullName));
         return res.success('Request Rejected',deleteRequest);
     }
     catch(err){
