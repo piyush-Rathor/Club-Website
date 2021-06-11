@@ -60,3 +60,17 @@ exports.rejectReq = async (req, res, next) => {
     return res.success("Request Rejected", deleteRequest);
   } catch (err) {}
 };
+
+exports.removeMember = async (req, res, next) => {
+    try {
+      const deleteRequest = await clubMembers
+        .findOneAndDelete({ _id: req.query.id })
+        .select("email fullName mobileNumber teams");
+      send(
+        deleteRequest.email,
+        "Unnat Technical Club",
+        constants.removeMemberMAil(deleteRequest.fullName)
+      );
+      return res.success("Member Remove successfully", deleteRequest);
+    } catch (err) {}
+  };

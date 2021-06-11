@@ -12,4 +12,6 @@ router.patch("/acceptreq",verifyAdmin,adminController.acceptReq);
 
 router.post("/rejectedreq",verifyAdmin,adminController.rejectReq);
 
+router.post("/removemember",verifyAdmin,adminController.removeMember);
+
 module.exports = router;

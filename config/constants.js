@@ -23,4 +23,10 @@ const rejectctionMAil = (name) => {
     <div style="text-align:center">Better luck next Time!</div>`;
 };
 
-module.exports = { ...defaultConfig, ...STATUS, ...JWT_SECRET, selectionMAil ,rejectctionMAil};
+const removeMemberMAil = (name) => {
+  return `<div style="text-align:center">Hey ${name}</div>
+  <div style="text-align:center">You are <b>removed</b> from the Club</div><br/>
+    <div style="text-align:center">By Unnat technical Club Administrator</div>`;
+};
+
+module.exports = { ...defaultConfig, ...STATUS, ...JWT_SECRET, selectionMAil ,rejectctionMAil,removeMemberMAil};
