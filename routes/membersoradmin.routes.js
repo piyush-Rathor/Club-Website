@@ -10,5 +10,7 @@ router.get('/profile',verifyMemberorAdmin,memberoradminController.getProfile);
 
 router.get('/getmembers',verifyMemberorAdmin,memberoradminController.getClubMembers);
 
+router.get('/getteammembers',verifyMemberorAdmin,memberoradminController.getTeamMembers);
+
 module.exports = router;
 

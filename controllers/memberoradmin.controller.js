@@ -23,3 +23,24 @@ exports.getClubMembers = async (req, res, next) => {
 
     }
 };
+
+exports.getTeamMembers = async (req, res, next) => {
+    try{
+        const members = await clubMembers.find().select("email fullName mobileNumber gender specialization role branch year imageUrl teams");
+        const teamMembers=[]
+        members.forEach(member =>{
+            res.locals.user.teams.forEach(teamUser=>{
+                member.teams.forEach(teamMember=>{
+                    if(teamMember.toString()===teamUser.toString()){
+                        teamMembers.push(member)
+                    }
+                })
+            })
+        })
+        return res.success(`Team Members`,teamMembers);
+    }
+    catch(err){
+
+    }
+};
+
