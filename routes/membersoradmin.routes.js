@@ -14,7 +14,9 @@ router.get('/getmembers',verifyMemberorAdmin,memberoradminController.getClubMemb
 
 router.get('/getteammembers',verifyMemberorAdmin,memberoradminController.getTeamMembers);
 
-router.post('/profile/upload',verifyMemberorAdmin,upload,memberoradminController.postUpdateProfile);
+router.post('/picture/profile/upload',verifyMemberorAdmin,upload.single('image'),memberoradminController.postUpdateProfile);
+
+router.post('/profile/edit',verifyMemberorAdmin,memberoradminController.postEditProfile);
 
 
 module.exports = router;

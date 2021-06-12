@@ -24,7 +24,7 @@ exports.getProfile = async (req, res, next) => {
 exports.getClubMembers = async (req, res, next) => {
   try {
     let members = await clubMembers
-      .find()
+      .find({ email: { $ne: res.locals.user.email } })
       .select(
         "email fullName mobileNumber gender specialization role branch year imageUrl teams"
       );
@@ -35,7 +35,7 @@ exports.getClubMembers = async (req, res, next) => {
 exports.getTeamMembers = async (req, res, next) => {
   try {
     const members = await clubMembers
-      .find()
+      .find({ email: { $ne: res.locals.user.email } })
       .select(
         "email fullName mobileNumber gender specialization role branch year imageUrl teams"
       );
@@ -63,5 +63,16 @@ exports.postUpdateProfile = async (req, res, next) => {
         user.imageUrl=data.Location;
         await user.save();
         return res.success(`Profile upload successfully`)
+    } catch (err) {}
+  };
+
+  exports.postEditProfile = async (req, res, next) => {
+    try {
+        let user= await clubMembers.findOne({ email: res.locals.user.email });
+        if(!user) {
+            user=await clubAdminAccounts.findOne({ email: res.locals.user.email });
+        }
+
+        return res.success(`Updated`);
     } catch (err) {}
   };
