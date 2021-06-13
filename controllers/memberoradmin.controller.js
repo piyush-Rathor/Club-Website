@@ -1,14 +1,14 @@
 const clubAdminAccounts = require("../model/admin.module");
 const clubMembers = require("../model/member.model");
 
-const s3=require("../config/s3")
+const s3 = require("../config/s3");
 
 exports.getProfile = async (req, res, next) => {
   try {
     let user = await clubMembers
       .findById({ _id: res.locals.user._id })
       .select(
-        "email fullName mobileNumber gender specialization role branch year imageUrl"
+        "email fullName mobileNumber gender specialization role imageUrl college"
       );
     if (!user) {
       user = await clubAdminAccounts
@@ -54,25 +54,31 @@ exports.getTeamMembers = async (req, res, next) => {
 };
 
 exports.postUpdateProfile = async (req, res, next) => {
-    try {
-        const data=await s3.uploadFile(req.file);
-        let user= await clubMembers.findOne({ email: res.locals.user.email });
-        if(!user){
-            user= await clubAdminAccounts.findOne({ email: res.locals.user.email });
-        }
-        user.imageUrl=data.Location;
-        await user.save();
-        return res.success(`Profile upload successfully`)
-    } catch (err) {}
-  };
+  try {
+    const data = await s3.uploadFile(req.file);
+    let user = await clubMembers.findOne({ email: res.locals.user.email });
+    if (!user) {
+      user = await clubAdminAccounts.findOne({ email: res.locals.user.email });
+    }
+    user.imageUrl = data.Location;
+    await user.save();
+    return res.success(`Profile upload successfully`,user.imageUrl);
+  } catch (err) {}
+};
 
-  exports.postEditProfile = async (req, res, next) => {
-    try {
-        let user= await clubMembers.findOne({ email: res.locals.user.email });
-        if(!user) {
-            user=await clubAdminAccounts.findOne({ email: res.locals.user.email });
-        }
-
-        return res.success(`Updated`);
-    } catch (err) {}
-  };
+exports.postEditProfile = async (req, res, next) => {
+  try {
+    let user = await clubMembers.findOne({ email: res.locals.user.email });
+    if (!user) {
+      user = await clubAdminAccounts.findOne({ email: res.locals.user.email });
+    }
+    if (req.body.college) {
+      user.college[req.body.name]=req.body.value
+    }
+    else{
+        user[req.body.name]=req.body.value 
+    }
+      await user.save();
+    return res.success(`Updated`);
+  } catch (err) {}
+};
