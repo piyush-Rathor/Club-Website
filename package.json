@@ -16,6 +16,7 @@
     "from": "^0.1.7",
     "google-auth-library": "^7.0.4",
     "import": "0.0.6",
+    "joi": "^17.4.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.12.5",
     "moongoose": "0.0.5",

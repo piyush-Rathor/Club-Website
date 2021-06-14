@@ -4,9 +4,12 @@ const router = express.Router();
 
 const loginController = require('../controllers/login.controllers');
 
-const {verify} =require('../services/auth')
+const validationMiddleware =require('../services/validation.middleware');
+const validationSchema = require('../services/validation');
 
-router.post('/email',loginController.postLogin);
+const {verify} =require('../services/auth');
+
+router.post('/email',validationMiddleware(validationSchema.blogLogin),loginController.postLogin);
 
 module.exports = router;
 

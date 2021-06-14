@@ -12,7 +12,6 @@ const {OAuth2Client}= require("google-auth-library");
 const client=new OAuth2Client(process.env.CLIENT_Id);
 
 exports.postOtp = async (req, res, next) => {
-  console.log("Inside Post Otp Controller")
   const otp = Math.floor(1000 + Math.random() * 9000);
   if (req.body.password !== req.body.confirmPassword) {
     return res.send("Your Password and Confirm Password are not Match");
@@ -23,7 +22,7 @@ exports.postOtp = async (req, res, next) => {
     clubAccUser = new clubAcc({
       email: req.body.email,
       password: hashSync(req.body.password),
-      fullName: req.body.firstName + " " + req.body.lastName,
+      fullName: ((req.body.firstName )+ (" " + (req.body.lastName?req.body.lastName:""))),
       mobileNumber: req.body.mobileNumber,
       otp: hashSync(otp),
       status: constants.SEMIACTIVE,

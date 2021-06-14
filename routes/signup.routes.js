@@ -6,15 +6,19 @@ const router = express.Router();
 
 const signUpController = require("../controllers/signup.controllers");
 
-router.post("/postotp", signUpController.postOtp);
 
-router.post("/confirmpostotp", signUpController.confirmPostOtp);
+const validationMiddleware =require('../services/validation.middleware');
+const validationSchema = require('../services/validation');
 
-router.post("/forgetotp", signUpController.forgetGetOtp);
+router.post("/postotp", validationMiddleware(validationSchema.blogCreateAccountSendOpt),signUpController.postOtp);
 
-router.post("/submitforgetotp", signUpController.submitForgetGetOtp);
+router.post("/confirmpostotp", validationMiddleware(validationSchema.blogCreateAccountPostOpt),signUpController.confirmPostOtp);
 
-router.post("/submitforgetpassword", signUpController.submitForgetPassword);
+router.post("/forgetotp", validationMiddleware(validationSchema.blogForgetPasswordOtp), signUpController.forgetGetOtp);
+
+router.post("/submitforgetotp", validationMiddleware(validationSchema.blogForgetSubmitPasswordOtp), signUpController.submitForgetGetOtp);
+
+router.post("/submitforgetpassword", validationMiddleware(validationSchema.blogForgetSubmitPassword), signUpController.submitForgetPassword);
 
 function isLoggedIn(req, res, next) {
     req.user?next():res.sendStatus(401);
