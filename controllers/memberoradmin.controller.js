@@ -8,13 +8,13 @@ exports.getProfile = async (req, res, next) => {
     let user = await clubMembers
       .findById({ _id: res.locals.user._id })
       .select(
-        "email fullName mobileNumber gender specialization role imageUrl college"
+        "email fullName mobileNumber gender specialization role imageUrl college about"
       );
     if (!user) {
       user = await clubAdminAccounts
         .findById({ _id: res.locals.user._id })
         .select(
-          "email fullName mobileNumber gender specialization role branch year imageUrl"
+          "email fullName mobileNumber gender specialization role branch year imageUrl about"
         );
     }
     return res.success(`Profile Details`, user);

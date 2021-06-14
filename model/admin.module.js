@@ -57,6 +57,10 @@ const clubAdminSchema = new Schema(
       type:String,
       trim:true,
       def:"Faculity"
+    },
+    about:{
+      type:String,
+      trim:true,
     }
   },
   { versionKey: false, timestamps: true }

@@ -89,6 +89,10 @@ const clubMemberSchema = new Schema(
     year:{
       type:String,
       trim:true,
+    },
+    about:{
+      type:String,
+      trim:true,
     }
   },
   { versionKey: false, timestamps: true }
